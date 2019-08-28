@@ -1,7 +1,11 @@
 package org.d3ifcool.hutang;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,4 +30,16 @@ public class DipinjamkanFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_dipinjamkan, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        FloatingActionButton floatingActionButton = getView().findViewById(R.id.fab_dipinjamkan);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), FormHutang.class);
+                startActivity(i);
+            }
+        });
+    }
 }
