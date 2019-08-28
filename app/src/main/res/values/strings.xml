@@ -6,4 +6,15 @@
     <string name="dipinjamkan">Dipinjamkan</string>
     <string name="meminjam">Meminjam</string>
     <string name="formHutang">Form Hutang</string>
+
+    <string name="tanggal_create">Tanggal Pembuatan</string>
+    <string name="tanggal_deadline">Jatuh Tempo</string>
+    <string name="nama">Nama</string>
+    <string name="jumlah">Jumlah</string>
+    <string name="kategori">Kategori</string>
+    <string name="status">Status</string>
+
+    <string name="button_add">Tambah Data</string>
+    <string name="button_update">Perbaruhi Data</string>
+    <string name="button_delete">Hapus Data</string>
 </resources>
