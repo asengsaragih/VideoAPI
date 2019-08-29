@@ -1,6 +1,7 @@
 package org.d3ifcool.hutang;
 
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -39,8 +40,7 @@ public class FormHutang extends AppCompatActivity implements LoaderManager.Loade
     private EditText mNamaEditText;
     private EditText mJumlahEditText;
     private RadioGroup mKategoriRadioGroup;
-    private RadioButton mDipinjamkanRadioButton;
-    private RadioButton mMeminjamRadioButton;
+    private RadioButton mKategoriRadioButton;
     private Button mAddButton;
     private Button mUpdateButton;
     private Button mDeleteButton;
@@ -66,9 +66,13 @@ public class FormHutang extends AppCompatActivity implements LoaderManager.Loade
         mTanggalDeadlineEditText = (EditText) findViewById(R.id.form_tanggal_deadline);
         mNamaEditText = (EditText) findViewById(R.id.form_nama);
         mJumlahEditText = (EditText) findViewById(R.id.form_jumlah);
-        mDipinjamkanRadioButton = (RadioButton) findViewById(R.id.radioButton_dipinjamkan);
-        mMeminjamRadioButton = (RadioButton) findViewById(R.id.radioButton_meminjam);
+
+        //untuk mengambil nilai dari radio button
         mKategoriRadioGroup = (RadioGroup) findViewById(R.id.form_kategori);
+        int selectKategori = mKategoriRadioGroup.getCheckedRadioButtonId();
+        mKategoriRadioButton = findViewById(selectKategori);
+        // Tinggal Panggil mKategoriRadioButton.getText();
+
         mAddButton = findViewById(R.id.button_add);
         mUpdateButton = findViewById(R.id.button_update);
         mDeleteButton = findViewById(R.id.button_remove);
@@ -77,8 +81,6 @@ public class FormHutang extends AppCompatActivity implements LoaderManager.Loade
         mTanggalDeadlineEditText.setOnTouchListener(mTouchListener);
         mNamaEditText.setOnTouchListener(mTouchListener);
         mJumlahEditText.setOnTouchListener(mTouchListener);
-        mDipinjamkanRadioButton.setOnTouchListener(mTouchListener);
-        mMeminjamRadioButton.setOnTouchListener(mTouchListener);
 
         Intent intent = getIntent();
         mCurrentHutangUri = intent.getData();
@@ -97,7 +99,8 @@ public class FormHutang extends AppCompatActivity implements LoaderManager.Loade
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(FormHutang.this, "Kosong", Toast.LENGTH_SHORT).show();
+                saveHutang();
+                finish();
             }
         });
     }
@@ -140,7 +143,12 @@ public class FormHutang extends AppCompatActivity implements LoaderManager.Loade
         String tanggalCreateString = mTanggalCreateEditText.getText().toString().trim();
         String tanggalDeadlineString = mTanggalDeadlineEditText.getText().toString().trim();
         String namaString = mTanggalCreateEditText.getText().toString().trim();
-//        String kategoriString =
+        String jumlahString = mJumlahEditText.getText().toString().trim();
+        String kategoriString = mKategoriRadioButton.getText().toString();
+
+        int kategori = 0;
+        int status = 1;
+        int jumlah = 0;
 
         if (mCurrentHutangUri == null
                 && TextUtils.isEmpty(tanggalCreateString) && TextUtils.isEmpty(tanggalDeadlineString)
@@ -148,11 +156,41 @@ public class FormHutang extends AppCompatActivity implements LoaderManager.Loade
             return;
         }
 
-//        int jumlahTotal = 0;
-//        int kategori = 0;
-//        int status = 0;
+        if (!TextUtils.isEmpty(jumlahString)) {
+            jumlah = Integer.parseInt(jumlahString);
+        }
 
-//        if (!TextUtils.isEmpty())
+        if (kategoriString == getString(R.string.dipinjamkan)){
+            kategori = 1;
+        } else {
+            kategori = 2;
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(Contract.HutangEntry.COLUMN_HUTANG_TANGGAL_CREATE, tanggalCreateString);
+        values.put(Contract.HutangEntry.COLUMN_HUTANG_TANGGAL_DEADLINE, tanggalDeadlineString);
+        values.put(Contract.HutangEntry.COLUMN_HUTANG_NAMA, namaString);
+        values.put(Contract.HutangEntry.COLUMN_HUTANG_JUMLAH, jumlah);
+        values.put(Contract.HutangEntry.COLUMN_HUTANG_KATEGORI, kategori);
+        values.put(Contract.HutangEntry.COLUMN_HUTANG_STATUS, status);
+
+        if (mCurrentHutangUri == null){
+            Uri newUri = getContentResolver().insert(Contract.HutangEntry.CONTENT_URI, values);
+
+            if (newUri == null){
+                Toast.makeText(this, getString(R.string.add_failed), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, getString(R.string.add_success), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            int rowAffected = getContentResolver().update(mCurrentHutangUri, values, null, null);
+
+            if (rowAffected == 0) {
+                Toast.makeText(this, getString(R.string.update_failed), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, getString(R.string.update_success), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @NonNull
