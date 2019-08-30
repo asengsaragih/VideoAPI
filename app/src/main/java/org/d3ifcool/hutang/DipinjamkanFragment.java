@@ -33,13 +33,5 @@ public class DipinjamkanFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FloatingActionButton floatingActionButton = getView().findViewById(R.id.fab_dipinjamkan);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), FormHutang.class);
-                startActivity(i);
-            }
-        });
     }
 }
