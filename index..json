@@ -1,0 +1,27 @@
+[
+  {
+    "name" : "Billie eilish - idontwannabeuanymore cover",
+    "type" : "mp4",
+    "url" : "https://raw.githubusercontent.com/asengsaragih/VideoAPI/master/assets/Billie%20-%20Idontwannabeuanymore%20Aldi.mp4"
+  },
+  {
+    "name" : "IU - bbibbi lyrics",
+    "type" : "mkv",
+    "url" : "https://raw.githubusercontent.com/asengsaragih/VideoAPI/master/assets/IU%20-%20bbibbi.mkv"
+  },
+  {
+    "name" : "Kina - Get u to the moon",
+    "type" : "mp4",
+    "url" : "https://raw.githubusercontent.com/asengsaragih/VideoAPI/master/assets/Kina%20-%20Get%20u%20to%20the%20moon.mp4"
+  },
+  {
+    "name" : "Porter Robinson - Goodbye to world",
+    "type" : "mkv",
+    "url" : "https://raw.githubusercontent.com/asengsaragih/VideoAPI/master/assets/Porter%20Robinson%20-%20Goodbye%20To%20A%20World.mkv"
+  },
+  {
+    "name" : "Vina panduwinata - Cinta cover",
+    "type" : "mp4",
+    "url" : "https://raw.githubusercontent.com/asengsaragih/VideoAPI/master/assets/Vina%20Panduwinata%20-%20Cinta%20Nabila.mkv"
+  }
+]
